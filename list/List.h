@@ -7,14 +7,20 @@ namespace wb {
 
 #define T int
 
+typedef enum Direction {
+    LEFT = 1,
+    RIGHT
+} Direction;
+
 typedef void (*OP)(const T& data);
 
 typedef struct Node {
-    Node():data(T()),next(NULL){}
-    Node(T d):data(d), next(NULL){}
+    Node():data(T()), prev(NULL), next(NULL){}
+    Node(T d):data(d), prev(NULL), next(NULL){}
 
     T data;
     Node* next;
+    Node* prev;
 } Node;
 
 class List
@@ -27,7 +33,7 @@ public:
     /**
      * 在指定Index位置插入数据,大于节点数在尾插入，小于0在头插入
      */
-    int  Insert(int nIndex, const T& data);
+    int  Insert(int index, const T& data);
 
     /**
      * 在列表尾插入
@@ -52,12 +58,30 @@ public:
     /**
      * 遍历列表，执行OP操作
      */
-    void Travel(OP op);
+    void Travel(Direction dir, OP op);
 
     /**
      * 获取列表的节点数
      */
     int GetNodeCount();
+
+private:
+    /**
+     * 插入data到node节点后面
+     */
+    void PushBackPri(Node* & node, const T& data);
+
+    /**
+     * 插入data到node节点前面
+     */
+    void PushFrontPri(Node* & node, const T& data);
+
+    void InsertNodePri(int index, const T& data);
+
+    void TravelLeft(OP op);
+    void TravelRight(OP op);
+
+    void Release();
 
 private:
     int m_nodeCount;

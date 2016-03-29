@@ -1,14 +1,15 @@
 Obj=List.o
 GCC=g++
+FLAGS= -g
 
 all:List.o main
 
 main:main.o
-	${GCC} $< ${Obj} -o $@
+	${GCC} ${FLAGS} $< ${Obj} -o $@
 main.o:main.cpp
-	${GCC} -c $< -o $@
+	${GCC} -c ${FLAGS} $< -o $@
 List.o:List.cpp
-	${GCC} -c $< -o $@
+	${GCC} -c ${FLAGS} $< -o $@
 
 clean:
 	rm *.o
