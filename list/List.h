@@ -76,9 +76,19 @@ private:
      */
     void PushFrontPri(Node* & node, const T& data);
 
+    /**
+      * 在index节点后插入data
+      */
     void InsertNodePri(int index, const T& data);
 
+    /**
+      * 从左到右遍历List，并执行op操作
+      */
     void TravelLeft(OP op);
+
+    /**
+      * 从右到左遍历List，并执行op操作
+      */
     void TravelRight(OP op);
 
     void Release();

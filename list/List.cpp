@@ -42,10 +42,32 @@ void List::PushFront(const T& data)
 
 void List::Delete(const T& data)
 {
+    Node* p = Find(data);
+
+    Node* prev = p->prev;
+    Node* next = p->next;
+
+    prev->next = next;
+    next->prev = prev;
+
+    if (p != NULL) {
+        delete p;
+    }
 }
 
 Node* List::Find(const T& data)
 {
+    Node* retNode = NULL;
+    Node* p = m_headNode->next;
+    
+    while (p != NULL) {
+        if (p->data == data) {
+            retNode = p;
+            break;
+        }
+        p = p->next;
+    }
+    return retNode;
 }
 
 void List::Travel(Direction dir, OP op)

@@ -26,6 +26,13 @@ int main(int argc, char* argv[])
     printf("反向遍历：\n");
     l.Travel(wb::LEFT, display);
 
+    l.Delete(40);
+
+    wb::Node* p = l.Find(40);
+    if (p != NULL) {
+        printf("data: %d\n", p->data);
+    }
+
     int count = l.GetNodeCount();
     printf("列表中有 %d 个元素\n", count);
 }
