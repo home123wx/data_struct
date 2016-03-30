@@ -14,6 +14,51 @@ List::~List()
     Release();
 }
 
+bool List::Empty()
+{
+    return (m_nodeCount == 0);
+}
+
+T List::First()
+{
+    T ret = T();
+    if (Empty()) {
+        return ret;
+    }
+    return m_headNode->next->data;
+}
+
+T List::Last()
+{
+    T ret = T();
+
+    if (Empty()) {
+        return ret;
+    }
+    return m_tailNode->data;
+}
+
+T List::PopFirst()
+{
+    T ret = First();
+    if (!Empty()) {
+        Node* p = m_headNode->next;
+        DeleteNode(p);
+    }
+    return ret;
+}
+
+T List::PopLast()
+{
+    T ret = Last();
+    if (!Empty()) {
+        Node* p = m_tailNode->prev;
+        DeleteNode(m_tailNode);
+        m_tailNode = p;
+    }
+    return ret;
+}
+
 int List::Insert(int index, const T& data)
 {
     if (index <= 0) {
@@ -42,24 +87,25 @@ void List::PushFront(const T& data)
 
 void List::Delete(const T& data)
 {
+    if (Empty()) {
+        return;
+    }
+
+    printf("删除数据为: %d 的节点\n", data);
+
     Node* p = Find(data);
 
-    Node* prev = p->prev;
-    Node* next = p->next;
-
-    prev->next = next;
-    next->prev = prev;
-
-    if (p != NULL) {
-        delete p;
-    }
+    DeleteNode(p);
 }
 
 Node* List::Find(const T& data)
 {
     Node* retNode = NULL;
+    if (Empty()) {
+        return retNode;
+    }
+
     Node* p = m_headNode->next;
-    
     while (p != NULL) {
         if (p->data == data) {
             retNode = p;
@@ -163,16 +209,61 @@ void List::TravelRight(OP op)
     }
 }
 
-void List::Release()
+void List::DeleteNode(Node* & node)
 {
-    Node* next = m_headNode->next;
-    Node* p = m_headNode;
+    if (node == NULL) {
+        return;
+    }
+
+    Node* prev = node->prev;
+    Node* next = node->next;
+
+    if (prev != NULL) {
+        node->prev->next = next;
+    }
+
+    if (next != NULL) {
+        node->next->prev = prev;
+    }
+
+    printf("------------\n");
+    delete node;
+    node = NULL;
+
+    --m_nodeCount;
+}
+
+void List::Clear()
+{
+    if (Empty()) {
+        return;
+    }
+    
+    Node* next = NULL;
+    Node* p = m_headNode->next;
+    if (p != NULL) {
+        next = p->next;
+    }
+
     while (p != NULL) {
         delete p;
         p = next;
         if (p != NULL) {
             next = p->next;
         }
+    }
+    m_headNode->next = NULL;
+    m_tailNode = m_headNode;
+
+    m_nodeCount = 0;
+}
+
+void List::Release()
+{
+    Clear();
+
+    if (m_headNode != NULL) {
+        delete m_headNode;
     }
 }
 

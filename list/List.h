@@ -31,6 +31,31 @@ public:
 
 public:
     /**
+     * List为空判断
+     */
+    bool Empty();
+
+    /**
+     * 取第一个元素
+     */
+    T First();
+
+    /**
+     * 取最后一个元素
+     */
+    T Last();
+
+    /**
+     * 弹出第一个node, 并返回该节点值
+     */
+    T PopFirst();
+
+    /**
+     * 弹出最后一个node, 并返回该节点值
+     */
+    T PopLast();
+
+    /**
      * 在指定Index位置插入数据,大于节点数在尾插入，小于0在头插入
      */
     int  Insert(int index, const T& data);
@@ -49,6 +74,11 @@ public:
      * 删除列表中对应数据
      */
     void Delete(const T& data);
+
+    /**
+     * 清空List中Node, 除了头节点
+     */
+    void Clear();
 
     /**
      * 查找对应数据并返回节点指针
@@ -80,6 +110,11 @@ private:
       * 在index节点后插入data
       */
     void InsertNodePri(int index, const T& data);
+
+    /**
+     * 删除节点
+     */
+    void DeleteNode(Node* & node);
 
     /**
       * 从左到右遍历List，并执行op操作

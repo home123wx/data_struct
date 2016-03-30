@@ -1,11 +1,11 @@
-Obj=List.o
-GCC=g++
-FLAGS= -g
+Obj = List.o main.o
+GCC = g++
+FLAGS = -g
 
-all:List.o main
+all:main
 
-main:main.o
-	${GCC} ${FLAGS} $< ${Obj} -o $@
+main:${Obj}
+	${GCC} ${FLAGS} ${Obj} -o $@
 main.o:main.cpp
 	${GCC} -c ${FLAGS} $< -o $@
 List.o:List.cpp
