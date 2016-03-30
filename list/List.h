@@ -81,6 +81,11 @@ public:
     void Clear();
 
     /**
+     * 按照data排序
+     */
+    void Sort();
+
+    /**
      * 查找对应数据并返回节点指针
      */
     Node* Find(const T& data);
@@ -115,6 +120,11 @@ private:
      * 删除节点
      */
     void DeleteNode(Node* & node);
+
+    /**
+     *
+     */
+    void SortPri(Node* first, Node* last);
 
     /**
       * 从左到右遍历List，并执行op操作

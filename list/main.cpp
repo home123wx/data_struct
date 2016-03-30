@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <time.h>
+
 #include "List.h"
 
 void display(const int& d)
@@ -16,6 +19,7 @@ int main(int argc, char* argv[])
 {
     wb::List l;
 
+    /*
     l.PushFront(10);
     l.PushFront(20);
 
@@ -38,18 +42,19 @@ int main(int argc, char* argv[])
     int count = l.GetNodeCount();
     printf("列表中有 %d 个元素\n", count);
 
-    l.Clear();
-
-    for (int i = 1; i < 8; ++i) {
-        l.PushBack(i);
-    }
-
-    show(wb::RIGHT, "正向遍历", &l);
-    show(wb::LEFT,  "反向遍历", &l);
-
     printf("第一个元素 : %d\n", l.PopFirst());
     printf("最后一个元素 : %d\n", l.PopLast());
 
+    l.Clear();
+    */
+
+    srand(time(NULL));
+    for (int i = 0; i < 20; ++i) {
+        l.PushBack(rand() % 100);
+    }
+
     show(wb::RIGHT, "正向遍历", &l);
-    show(wb::LEFT,  "反向遍历", &l);
+
+    l.Sort();
+    show(wb::RIGHT, "正向遍历", &l);
 }

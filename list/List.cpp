@@ -66,21 +66,21 @@ int List::Insert(int index, const T& data)
     } else if (index >= m_nodeCount) {
         PushBack(data);
     } else {
-        printf("在下标[%d]后插入: %d\n", index, data);
+        //printf("在下标[%d]后插入: %d\n", index, data);
         InsertNodePri(index, data);
     }
 }
 
 void List::PushBack(const T& data)
 {
-    printf("向尾插入: %d\n", data);
+    //printf("向尾插入: %d\n", data);
 
     PushBackPri(m_tailNode, data);
 }
 
 void List::PushFront(const T& data)
 {
-    printf("向头插入: %d\n", data);
+    //printf("向头插入: %d\n", data);
 
     PushFrontPri(m_headNode, data);
 }
@@ -91,11 +91,16 @@ void List::Delete(const T& data)
         return;
     }
 
-    printf("删除数据为: %d 的节点\n", data);
+    //printf("删除数据为: %d 的节点\n", data);
 
     Node* p = Find(data);
 
     DeleteNode(p);
+}
+
+void List::Sort()
+{
+    SortPri(m_headNode->next, m_tailNode);
 }
 
 Node* List::Find(const T& data)
@@ -191,6 +196,49 @@ void List::InsertNodePri(int index, const T& data)
     }
 }
 
+void List::SortPri(Node* first, Node* last)
+{
+    Node* left = first;
+    Node* right = last;
+
+    if (left == NULL || right == NULL) {
+        return;
+    }
+
+    if (left == right) {
+        return;
+    }
+
+    T d = left->data;
+
+    while (left != right) {
+        while (right != NULL && right != left && right->data >= d) {
+            right = right->prev;
+        }
+
+        if (left != NULL && right != NULL) {
+            left->data = right->data;
+        }
+
+        while (left != NULL && left != right && left->data <= d) {
+            left = left->next;
+        }
+
+        if (left != NULL && right != NULL) {
+            right->data = left->data;
+        }
+    }
+    left->data = d;
+
+    if (first != left) {
+        SortPri(first, left->prev);
+    }
+
+    if (last != right) {
+        SortPri(right->next, last);
+    }
+}
+
 void List::TravelLeft(OP op)
 {
     Node* p = m_tailNode;
@@ -226,7 +274,6 @@ void List::DeleteNode(Node* & node)
         node->next->prev = prev;
     }
 
-    printf("------------\n");
     delete node;
     node = NULL;
 

@@ -12,6 +12,5 @@ List.o:List.cpp
 	${GCC} -c ${FLAGS} $< -o $@
 
 clean:
-	rm *.o
-	rm main
-	
+	rm -f *.o
+	rm -f main
