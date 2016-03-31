@@ -48,13 +48,28 @@ int main(int argc, char* argv[])
     l.Clear();
     */
 
+    time_t beg = time(NULL);
+
     srand(time(NULL));
-    for (int i = 0; i < 20; ++i) {
+    for (int i = 0; i < 2000000; ++i) {
+        //l.PushBack(rand());
         l.PushBack(rand() % 100);
     }
 
-    show(wb::RIGHT, "正向遍历", &l);
+    time_t end = time(NULL);
 
+    printf("创建时间: %d s\n", end - beg);
+
+    //show(wb::RIGHT, "正向遍历", &l);
+
+    beg = time(NULL);
     l.Sort();
-    show(wb::RIGHT, "正向遍历", &l);
+    end = time(NULL);
+
+    printf("排序时间: %d s\n", end - beg);
+
+    printf("first = %d\n", l.First());
+    printf("last = %d\n", l.Last());
+
+    //show(wb::RIGHT, "正向遍历", &l);
 }

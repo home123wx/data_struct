@@ -212,19 +212,19 @@ void List::SortPri(Node* first, Node* last)
     T d = left->data;
 
     while (left != right) {
-        while (right != NULL && right != left && right->data >= d) {
+        while (right != left && right != NULL && right->data >= d) {
             right = right->prev;
         }
 
-        if (left != NULL && right != NULL) {
+        if (left != right && left != NULL && right != NULL) {
             left->data = right->data;
         }
 
-        while (left != NULL && left != right && left->data <= d) {
+        while (left != right && left != NULL && left->data <= d) {
             left = left->next;
         }
 
-        if (left != NULL && right != NULL) {
+        if (left != right && left != NULL && right != NULL) {
             right->data = left->data;
         }
     }
